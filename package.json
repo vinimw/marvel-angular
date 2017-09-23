@@ -1,0 +1,14 @@
+{
+  "name": "marvel",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+  },
+  "author": "Vinicius Weber",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+
+  }
+}

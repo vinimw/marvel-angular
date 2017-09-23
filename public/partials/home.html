@@ -1,0 +1,23 @@
+<h1>Characters</h1>
+
+<div class="row">
+	<div class="card-body" style="width: 33.33%; max-width:33.33%" ng-repeat="character in characters | filter: filter">
+		<div class="card">
+			<img class="card-img-top" ng-src="{{character.thumbnail.path}}/standard_fantastic.{{character.thumbnail.extension}}" alt="Card image cap">
+			<h4 class="card-title">{{character.name}}</h4>
+			<p class="card-text">{{character.description}}</p>
+			<a href="/characters/{{character.id}}" class="btn btn-primary">Show Detail</a>
+		</div>
+	</div>
+</div>
+
+<nav aria-label="Page navigation example">
+	<ul class="">
+		<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+		<li class="page-item"
+			ng-repeat="i in getNumber(pagination.totalPages) track by $index">
+			<a class="page-link" href="#"> {{$index}} </a>
+		</li>
+		<li class="page-item"><a class="page-link" href="#">Next</a></li>
+	</ul>
+</nav>

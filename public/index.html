@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="marvel">
+<head>
+	<meta charset="UTF-8">
+	<base href="/">
+	<meta name="viewport" content="width=device-width">
+	<title>Marvel</title>
+	
+	<script src="assets/js/angular.js"></script>
+	<script src="assets/js/vendors.js"></script>
+	<script src="assets/js/app.js"></script>
+
+	<link rel="stylesheet" href="assets/css/vendors.css">
+
+	<!-- <link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<script src="js/lib/angular.min.js"></script> -->
+	<!-- <script src="js/lib/angular-animate.min.js"></script>
+	
+	<script src="js/lib/angular-route.min.js"></script>
+	<script src="js/lib/angular-resource.min.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/controllers/fotos-controller.js"></script>
+	<script src="js/controllers/photo-controller.js"></script>
+	<script src="js/controllers/group-controller.js"></script>
+	<script src="js/directives/my-directives.js"></script>
+	<script src="js/directives/my-photo.js"></script>
+	<script src="js/services/my-services.js"></script>
+-->
+
+
+</head>
+<body>
+	<!-- Fixed navbar -->
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+		<a class="navbar-brand" href="#">Marvel</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="/characters">Home <span class="sr-only"></span></a>
+				</li>
+				<!-- <li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link disabled" href="#">Disabled</a>
+				</li> -->
+			</ul>
+			<form class="form-inline mt-2 mt-md-0">
+				<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</form>
+		</div>
+	</nav>
+	<div class="container" style="margin-top:80px;">
+		<ng-view></ng-view>
+	</div>
+	
+</body>
+</html>
