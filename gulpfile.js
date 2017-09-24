@@ -39,7 +39,8 @@ gulp.task('concatjsangular', function () {
         lib + 'angular/angular.js',
         lib + 'angular-route/angular-route.min.js',
         lib + 'angular-md5/angular-md5.min.js',
-        lib + 'angular-resource/angular-resource.min.js'
+        lib + 'angular-resource/angular-resource.min.js',
+        lib + 'ngInfiniteScroll/build/ng-infinite-scroll.min.js'
     ])
         .pipe(concat('angular.js'))
         .pipe(uglify({
@@ -89,7 +90,7 @@ gulp.task('concatcssvendors', function () {
  */
 
 gulp.task('watch', function () {
-    gulp.watch('./resources/js/**/*.js', ['concatjs']);
+    gulp.watch('resources/js/**/*.js', ['concatjs']);
     // gulp.watch('./resources/assets/scss/**/*.scss', ['sass']);
 });
 

@@ -5,7 +5,7 @@ app.config(function($routeProvider, $locationProvider) {
 	//routes
 	$routeProvider.when('/characters', {
 		templateUrl: 'partials/home.html',
-		controller: 'HomeController'
+		controller: 'Characters'
 	});
 
 	$routeProvider.when('/characters/:idCharacter', {
