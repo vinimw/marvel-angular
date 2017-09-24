@@ -4,7 +4,7 @@ var gulp = require('gulp'),
 	concat = require('gulp-concat'),
 	uglify = require('gulp-uglify'),
 	sass = require('gulp-sass'),
-	lib = './resources/assets/lib/';
+	lib = './resources/lib/';
 
 
 /**
@@ -14,12 +14,17 @@ var gulp = require('gulp'),
 
 gulp.task('concatjs', function () {
     return gulp.src([
-        'resources/assets/js/**/*.js'
+    	'resources/js/main.js',
+    	'resources/js/main.constants.js',
+    	'resources/js/main.routes.js',
+        'resources/js/controllers/**/*.js',
+        'resources/js/directives/**/*.js',
+        'resources/js/services/**/*.js'
     ])
         .pipe(concat('app.js'))
-        .pipe(uglify({
-            mangle: false
-        }))
+        // .pipe(uglify({
+        //     mangle: false
+        // }))
         .pipe(gulp.dest('public/assets/js'));
 });
 
@@ -56,7 +61,7 @@ gulp.task('concatjsvendors', function () {
         lib + 'bootstrap/dist/js/bootstrap.min.js'
 
     ])
-        .pipe(concat('vendors.js'))
+        .pipe(concat('vendor.js'))
         .pipe(uglify({
             mangle: false
         }))
@@ -73,7 +78,7 @@ gulp.task('concatcssvendors', function () {
     return gulp.src([
         lib + 'bootstrap/dist/css/bootstrap.min.css'
     ])
-        .pipe(concat('vendors.css'))
+        .pipe(concat('vendor.css'))
         .pipe(gulp.dest('./public/assets/css'));
 });
 
@@ -84,7 +89,7 @@ gulp.task('concatcssvendors', function () {
  */
 
 gulp.task('watch', function () {
-    gulp.watch('./resources/assets/js/**/*.js', ['concatjs']);
+    gulp.watch('./resources/js/**/*.js', ['concatjs']);
     // gulp.watch('./resources/assets/scss/**/*.scss', ['sass']);
 });
 
