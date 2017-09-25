@@ -1,21 +1,27 @@
 var app = angular.module('services.characters', []);
 
-app.service('CharactersService', function ($http, API, md5) {
+app.service('CharactersService', function ($http, API, HashService) {
 
 	var Characters = function() {
 		this.items = [];
 		this.busy = false;
 		this.after = 0;
-		this.limit = 6;
+		this.limit = 8;
+		this.name = '';
 	};
 
 	Characters.prototype.getCharacters = function() {
 		if (this.busy) return;
 		this.busy = true;
+		var nameSearch = '';
+		if (this.name != '') {
+			nameSearch = 'nameStartsWith=' + this.name + '&';
+		}
 
+		var url = API.URL + 'characters?' + nameSearch + 'offset=' + this.after + '&limit=' + this.limit + '&ts=' + API.TS + '&apikey=' + API.APIKEY + '&hash=' + HashService.getHash();
 		$http({
 			method: 'GET',
-			url: API.URL + 'characters?offset=' + this.after + '&limit=' + this.limit + '&ts=' + API.TS + '&apikey=' + API.APIKEY + '&hash=' + md5.createHash(API.TS+API.PRIVATEKEY+API.APIKEY)
+			url: url
 		}).then(function (success){
 
 			var result = success.data.data.results;

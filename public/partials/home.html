@@ -1,13 +1,21 @@
 <h1>Characters</h1>
 
+<div class="jumbotron">
+	<div class="row">
+		<div class="form-group col-12">
+			<p class="lead">You can find your favorite Marvel hero</p>
+			<input type="text" class="form-control" ng-model="changeCharacter" placeholder="Search a character">
+		</div>
+	</div>
+</div>
 <div class="row" infinite-scroll="characters.getCharacters()" infinite-scroll-disabled="characters.busy">
-	<div class="card-body col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4" ng-repeat="character in characters.items">
+	<div class="card-body col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3" ng-repeat="character in characters.items | filter: filter">
 		<div class="card">
-			<img class="card-img-top" ng-src="{{character.photo}}" alt="{{character.name}}" title="{{character.name}}">
+			<img class="card-img-top rounded" ng-src="{{character.photo}}" alt="{{character.name}}" title="{{character.name}}">
 			<h4 class="card-title">{{character.name}}</h4>
 			<p class="card-text">{{character.description | limitTo:100}}</p>
 			<a href="/characters/{{character.id}}" class="btn btn-primary">Show Detail</a>
 		</div>
 	</div>
-	<div ng-show='characters.busy'>Loading data...</div>
+	<div class="alert alert-secondary col-12" role="alert" ng-show='characters.busy'>Loading characters...</div>
 </div>

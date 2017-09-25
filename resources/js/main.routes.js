@@ -9,7 +9,8 @@ app.config(function($routeProvider, $locationProvider) {
 	});
 
 	$routeProvider.when('/characters/:idCharacter', {
-		templateUrl: 'partials/detail.html'
+		templateUrl: 'partials/detail.html',
+		controller: 'CharacterDetail'
 	});
 
 	$routeProvider.otherwise({

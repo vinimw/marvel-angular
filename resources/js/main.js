@@ -7,9 +7,13 @@ var app = angular.module('marvel', [
 
 	'constants.app',
 
+	'directives.search',
+
 	'controllers.characters',
+	'controllers.character-detail',
 
-	'services.characters'
-
+	'services.characters',
+	'services.hash',
+	'services.character-detail'
 
 ]);
