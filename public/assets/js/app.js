@@ -50,13 +50,30 @@ app.config(function($routeProvider, $locationProvider) {
 });
 var app = angular.module('controllers.character-detail', []);
 
-app.controller('CharacterDetail', function($scope, $http, API, CharacterDetailService) {
+app.controller('CharacterDetail', function($scope, $http, API, CharacterDetailService, $routeParams) {
 
 	$scope.character = [];
+	$scope.characterId = $routeParams.idCharacter;
+		
+	vm = this;
 
-	$scope.character = CharacterDetailService.getCharacter('1017100');
-	console.log($scope.character);
-	//Get character
+	vm.getCharacter = function(characterId){
+
+		// console.log($scope.character);
+		CharacterDetailService.getCharacter(characterId)
+		.then(function(data){
+			console.log(data);
+			$scope.character.description = data.description;
+			$scope.character.title = data.name;
+			$scope.character.photo = data.photo;
+		}, function(error){
+			console.log(error);
+		});
+
+		return;
+	};
+
+	vm.getCharacter($scope.characterId);
 
 });
 var app = angular.module('controllers.characters', []);
@@ -130,34 +147,34 @@ app.directive('fieldCharacterSearch', function() {
 });
 var app = angular.module('services.character-detail', []);
 
-app.service('CharacterDetailService', function ($q, $http, API, HashService) {
+app.service('CharacterDetailService', function ($q, $http, API) {
 
 	var self = {
 
 		'getCharacter': function (idCharacter) {
-			var character = [];
-			var url = API.URL + 'characters/' + idCharacter + '?apikey=' + API.APIKEY;
-			$http({
-				method: 'GET',
-				url: url
-			}).then(function (success){
-				var characters = [];
-				var result = success.data.data.results;
-				angular.forEach(result, function(character, key) {
-					character.photo = character.thumbnail.path + '/standard_fantastic.' + character.thumbnail.extension;
-					characters.push(character);
+
+			return $q(function(resolve, reject) {
+				var character = [];
+				var url = API.URL + 'characters/' + idCharacter + '?apikey=' + API.APIKEY;
+				$http({
+					method: 'GET',
+					url: url
+				}).then(function (success){
+					var characters = [];
+					var result = success.data.data.results;
+					angular.forEach(result, function(character, key) {
+						character.photo = character.thumbnail.path + '/standard_fantastic.' + character.thumbnail.extension;
+						characters.push(character);
+					});
+
+					character = characters[0];
+
+					resolve(character);
+
+				},function (error){
+					console.log(error);
+					reject(error);
 				});
-
-				character = characters[0];
-
-				return character;
-
-
-			// character.photo = character.thumbnail.path + '/standard_fantastic.' + character.thumbnail.extension;
-
-			},function (error){
-				console.log(error);
-				return;
 			});
 		}
 	};
@@ -167,7 +184,7 @@ app.service('CharacterDetailService', function ($q, $http, API, HashService) {
 
 var app = angular.module('services.characters', []);
 
-app.service('CharactersService', function ($q, $http, API, HashService) {
+app.service('CharactersService', function ($q, $http, API) {
 	
 	var self = {
 

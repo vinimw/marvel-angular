@@ -1,12 +1,12 @@
 <h1>Detail of chacacter</h1>
 
 <div class="row">
-	<div class="col-12 col-sm-6">
-		image
+	<div class="col-12 col-sm-4">
+		<img ng-src="{{character.photo}}" ng-alt="{{character.title}}" style="width:100%" class="rounded img-fluid">
 	</div>
 
-	<div class="col-12 col-sm-6">
-		<h1>Title asdasd</h1>
-		<p>Bacon ipsum dolor amet pork chop landjaeger cupim porchetta tenderloin burgdoggen capicola. Swine flank kielbasa boudin andouille short loin turducken tongue pork loin pork chop pork biltong. Salami rump brisket porchetta landjaeger hamburger sausage ribeye ground round drumstick pastrami bresaola meatball beef. Frankfurter kevin flank jerky, tri-tip chuck meatball cupim brisket pig fatback swine venison.</p>
+	<div class="col-12 col-sm-8">
+		<h1>{{character.title}}</h1>
+		<p>{{character.description}}</p>
 	</div>
 </div>

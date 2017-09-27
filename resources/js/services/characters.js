@@ -1,6 +1,6 @@
 var app = angular.module('services.characters', []);
 
-app.service('CharactersService', function ($q, $http, API, HashService) {
+app.service('CharactersService', function ($q, $http, API) {
 	
 	var self = {
 
