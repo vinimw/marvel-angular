@@ -66,12 +66,47 @@ app.controller('Characters', function($scope, $http, API, md5, CharactersService
 	$scope.characters = [];
 	$scope.changeCharacter = '';
 
-	//Get characters
-	
-	$scope.characters = new CharactersService();
+	var vm = $scope;
+
+	vm.params = {
+	    "isLoading": false,
+	    "after": 0,
+	    "limit": 8,
+	    "name": ''
+	};
+
+	vm.getCharacters = function () {
+
+		if (vm.params.isLoading) {
+			return;
+		}
+
+	    vm.params.isLoading = true;
+
+	    CharactersService.getCharacter(vm.params.name,vm.params.after,vm.params.limit).then(
+	        function (res) {
+	        	angular.forEach(res.characters, function(character, key) {
+	        		$scope.characters.push(character);
+	        	});
+	        	vm.params.after = res.offset + res.count;
+	            vm.params.isLoading = false;
+
+	        }, function (err) {
+	            console.error('Error getting settings');
+	            console.error(err);
+	            vm.params.isLoading = false;
+	        }
+	    );
+	};
+
+	vm.getCharacters();
+
 
 	$scope.$watch('changeCharacter', function(newValue, oldValue) {
-		$scope.changeCharacter = newValue;
+		vm.params.name = newValue;
+		vm.params.after = 0;
+		$scope.characters = [];
+		vm.getCharacters();
 	}, true);
 
 });
@@ -95,7 +130,7 @@ app.directive('fieldCharacterSearch', function() {
 });
 var app = angular.module('services.character-detail', []);
 
-app.service('CharacterDetailService', function ($http, API, HashService) {
+app.service('CharacterDetailService', function ($q, $http, API, HashService) {
 
 	var self = {
 
@@ -132,47 +167,45 @@ app.service('CharacterDetailService', function ($http, API, HashService) {
 
 var app = angular.module('services.characters', []);
 
-app.service('CharactersService', function ($http, API, HashService) {
+app.service('CharactersService', function ($q, $http, API, HashService) {
+	
+	var self = {
 
-	var Characters = function() {
-		this.items = [];
-		this.busy = false;
-		this.after = 0;
-		this.limit = 8;
-		this.name = '';
-	};
+		'getCharacter': function (name,offset,limit) {
+			
+			return $q(function(resolve, reject) {
+				var nameSearch = '';
+				if (name != '') {
+					nameSearch = 'nameStartsWith=' + name + '&';
+				}
+				var url = API.URL + 'characters?' + nameSearch + 'offset=' + offset + '&limit=' + limit + '&apikey=' + API.APIKEY;
+				$http({
+					method: 'GET',
+					url: url
+				}).then(function (success){
+					var characters = [];
+					var data = [];
+					var result = success.data.data.results;
+					data = success.data.data;
+					angular.forEach(result, function(character, key) {
+						character.photo = character.thumbnail.path + '/standard_fantastic.' + character.thumbnail.extension;
+						characters.push(character);
+					});
 
-	Characters.prototype.getCharacters = function() {
-		if (this.busy) return;
-		this.busy = true;
-		var nameSearch = '';
-		if (this.name != '') {
-			nameSearch = 'nameStartsWith=' + this.name + '&';
-		}
+					data.characters = characters;
 
-		var url = API.URL + 'characters?' + nameSearch + 'offset=' + this.after + '&limit=' + this.limit + '&ts=' + API.TS + '&apikey=' + API.APIKEY + '&hash=' + HashService.getHash();
-		$http({
-			method: 'GET',
-			url: url
-		}).then(function (success){
+					resolve(data);
 
-			var result = success.data.data.results;
-			var characters = this.items;
-
-			angular.forEach(result, function(character, key) {
-				character.photo = character.thumbnail.path + '/standard_fantastic.' + character.thumbnail.extension;
-				characters.push(character);
+				},function (error){
+					reject(error);
+				});
 			});
-
-			this.items = characters;
-			this.after = success.data.data.offset + success.data.data.limit;
-			this.busy = false;
-
-		}.bind(this),function (error){
-			this.busy = false;
-			console.log(error);
-		}.bind(this));
+			
+		}
 	};
+
+	return self;
+
 
 	return Characters;
 });
