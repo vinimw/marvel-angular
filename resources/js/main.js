@@ -4,6 +4,7 @@ var app = angular.module('marvel', [
 	'ngResource', 
 	'ngMd5',
 	'infinite-scroll',
+	'ngProgress',
 
 	'constants.app',
 
@@ -14,6 +15,7 @@ var app = angular.module('marvel', [
 
 	'services.characters',
 	'services.hash',
-	'services.character-detail'
+	'services.character-detail',
+	'services.comics'
 
 ]);

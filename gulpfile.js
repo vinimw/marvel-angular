@@ -40,7 +40,8 @@ gulp.task('concatjsangular', function () {
         lib + 'angular-route/angular-route.min.js',
         lib + 'angular-md5/angular-md5.min.js',
         lib + 'angular-resource/angular-resource.min.js',
-        lib + 'ngInfiniteScroll/build/ng-infinite-scroll.min.js'
+        lib + 'ngInfiniteScroll/build/ng-infinite-scroll.min.js',
+        lib + 'ngprogress/build/ngprogress.min.js'
     ])
         .pipe(concat('angular.js'))
         .pipe(uglify({
